@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_gradient_animation_text: ^1.0.2
+  url_launcher: ^6.3.0
   video_player: ^2.9.1
 
 dev_dependencies:

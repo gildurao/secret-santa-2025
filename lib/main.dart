@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:secret_santa/const/resource.dart';
+import 'package:secret_santa/expandable_fab.dart';
 import 'package:secret_santa/rotating_shining_card.dart';
 import 'package:secret_santa/theme.dart';
 import 'package:flutter_gradient_animation_text/flutter_gradient_animation_text.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
 const theme = MaterialTheme(TextTheme());
@@ -158,17 +160,24 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final videoController = VideoPlayerController.asset(
     'assets/videos/underwater.mp4',
-    videoPlayerOptions: VideoPlayerOptions(
-      allowBackgroundPlayback: false,
-    ),
-  )..setLooping(true);
+  );
+  bool flag = false;
 
   @override
   void initState() {
     super.initState();
-    videoController.initialize().then((_) => setState(() {
-          videoController.play();
-        }));
+    videoController.initialize().then((_) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          setState(() {
+            flag = true;
+            videoController.setVolume(0);
+            videoController.setLooping(true);
+            videoController.play();
+          });
+        },
+      );
+    });
   }
 
   @override
@@ -183,11 +192,15 @@ class _MyAppState extends State<MyApp> {
           ),
           Positioned.fill(
             child: IgnorePointer(
-              child: Opacity(
-                opacity: 0.15,
-                child: AspectRatio(
-                  aspectRatio: videoController.value.aspectRatio,
-                  child: VideoPlayer(videoController),
+              child: AnimatedOpacity(
+                opacity: flag ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 250),
+                child: Opacity(
+                  opacity: 0.15,
+                  child: AspectRatio(
+                    aspectRatio: videoController.value.aspectRatio,
+                    child: VideoPlayer(videoController),
+                  ),
                 ),
               ),
             ),
@@ -212,10 +225,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        controller: scrollController,
         children: [
           MainSectionText(
             text: 'MARVO, DEEP OPERATIVE',
@@ -531,6 +547,30 @@ class _MyHomePageState extends State<MyHomePage> {
               fontSize: 128,
               color: context.colorScheme.onPrimary,
             ),
+          ),
+        ],
+      ),
+      floatingActionButton: ExpandableFab(
+        distance: 128,
+        children: [
+          ActionButton(
+            onPressed: () => launchUrlString(
+              'https://tappedout.net/mtg-decks/secret-santa-20-25/',
+            ),
+            icon: Image.asset('assets/tappedout.png'),
+            message: 'Deck List (TappedOut)',
+          ),
+          ActionButton(
+            onPressed: () => scrollController
+                .jumpTo(scrollController.position.minScrollExtent),
+            icon: const Icon(Icons.move_up),
+            message: 'Scroll to top',
+          ),
+          ActionButton(
+            onPressed: () => scrollController
+                .jumpTo(scrollController.position.maxScrollExtent),
+            icon: const Icon(Icons.move_down),
+            message: 'Scroll to bottom',
           ),
         ],
       ),
