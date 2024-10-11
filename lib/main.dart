@@ -6,6 +6,7 @@ import 'package:secret_santa/expandable_fab.dart';
 import 'package:secret_santa/rotating_shining_card.dart';
 import 'package:secret_santa/theme.dart';
 import 'package:flutter_gradient_animation_text/flutter_gradient_animation_text.dart';
+import 'package:secret_santa/upgrades.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:video_player/video_player.dart';
 
@@ -16,128 +17,131 @@ const spacing = SizedBox(height: 32);
 const creepsterFont = 'Creepster';
 const nablaFont = 'Nabla';
 
-const landCards = [
-  CardAssets.ASSETS_DSK_279_ISLAND_PNG,
-  CardAssets.ASSETS_DSK_279_ISLAND_PNG,
-  CardAssets.ASSETS_DSK_279_ISLAND_PNG,
-  CardAssets.ASSETS_DSK_279_ISLAND_PNG,
-  CardAssets.ASSETS_DSK_281_SWAMP_PNG,
-  CardAssets.ASSETS_DSK_281_SWAMP_PNG,
-  CardAssets.ASSETS_DSK_281_SWAMP_PNG,
-  CardAssets.ASSETS_DSK_281_SWAMP_PNG,
-  CardAssets.ASSETS_MH3_243_BOGGART_BOG_JPG,
-  CardAssets.ASSETS_DSC_265_BOJUKA_BOG_PNG,
-  CardAssets.ASSETS_MKC_254_CHOKED_ESTUARY_PNG,
-  CardAssets.ASSETS_DMU_245_CONTAMINATED_AQUIFER_PNG,
-  CardAssets.ASSETS_CLB_888_CREEPING_TAR_PIT_PNG,
-  CardAssets.ASSETS_OTC_282_DARKWATER_CATACOMBS_PNG,
-  CardAssets.ASSETS_DSC_270_DIMIR_AQUEDUCT_PNG,
-  CardAssets.ASSETS_RAV_277_DUSKMANTLE_HOUSE_OF_SHADOW_PNG,
-  CardAssets.ASSETS_CMR_481_ENCROACHING_WASTES_PNG,
-  CardAssets.ASSETS_OTC_296_FETID_POOLS_PNG,
-  CardAssets.ASSETS_MOC_400_FIELD_OF_RUIN_PNG,
-  CardAssets.ASSETS_CM2_253_GHOST_QUARTER_PNG,
-  CardAssets.ASSETS_DSC_282_HALIMAR_DEPTHS_PNG,
-  CardAssets.ASSETS_MH3_240_HYDROELECTRIC_LABORATORY_JPG,
-  CardAssets.ASSETS_MH3_261_INUNDATED_ARCHIVE_JPG,
-  CardAssets.ASSETS_ZNC_133_JWAR_ISLE_REFUGE_PNG,
-  CardAssets.ASSETS_C20_288_MEMORIAL_TO_FOLLY_PNG,
-  CardAssets.ASSETS_CLB_900_MORTUARY_MIRE_PNG,
-  CardAssets.ASSETS_EMN_205_NEPHALIA_ACADEMY_PNG,
-  CardAssets.ASSETS_LCC_344_NEPHALIA_DROWNYARD_PNG,
-  CardAssets.ASSETS_DSC_295_RELIQUARY_TOWER_PNG,
-  CardAssets.ASSETS_MKC_283_RIVER_OF_TEARS_PNG,
-  CardAssets.ASSETS_OTC_313_ROGUE_S_PASSAGE_PNG,
-  CardAssets.ASSETS_8ED_325_SALT_MARSH_PNG,
-  CardAssets.ASSETS_OTC_316_SCAVENGER_GROUNDS_PNG,
-  CardAssets.ASSETS_ZNC_141_SUBMERGED_BONEYARD_PNG,
-  CardAssets.ASSETS_OTC_325_SUNKEN_HOLLOW_PNG,
-  CardAssets.ASSETS_DSC_307_TEMPLE_OF_DECEIT_PNG,
-  CardAssets.ASSETS_SNC_259_WATERFRONT_DISTRICT_PNG,
+const _landCards = [
+  R.ASSETS_DSK_279_ISLAND_PNG,
+  R.ASSETS_DSK_279_ISLAND_PNG,
+  R.ASSETS_DSK_279_ISLAND_PNG,
+  R.ASSETS_DSK_279_ISLAND_PNG,
+  R.ASSETS_DSK_281_SWAMP_PNG,
+  R.ASSETS_DSK_281_SWAMP_PNG,
+  R.ASSETS_DSK_281_SWAMP_PNG,
+  R.ASSETS_HOU_180_IPNU_RIVULET_JPG,
+  R.ASSETS_MH3_243_BOGGART_BOG_JPG,
+  R.ASSETS_MH3_243_BOGGART_TRAWLER_JPG,
+  R.ASSETS_DSC_265_BOJUKA_BOG_PNG,
+  R.ASSETS_MKC_254_CHOKED_ESTUARY_PNG,
+  R.ASSETS_DMU_245_CONTAMINATED_AQUIFER_PNG,
+  R.ASSETS_CLB_888_CREEPING_TAR_PIT_PNG,
+  R.ASSETS_OTC_282_DARKWATER_CATACOMBS_PNG,
+  R.ASSETS_DSC_270_DIMIR_AQUEDUCT_PNG,
+  R.ASSETS_RAV_277_DUSKMANTLE_HOUSE_OF_SHADOW_PNG,
+  R.ASSETS_CMR_481_ENCROACHING_WASTES_PNG,
+  R.ASSETS_OTC_296_FETID_POOLS_PNG,
+  R.ASSETS_MOC_400_FIELD_OF_RUIN_PNG,
+  R.ASSETS_CM2_253_GHOST_QUARTER_PNG,
+  R.ASSETS_DSC_282_HALIMAR_DEPTHS_PNG,
+  R.ASSETS_MH3_240_HYDROELECTRIC_LABORATORY_JPG,
+  R.ASSETS_MH3_240_HYDROELECTRIC_SPECIMEN_JPG,
+  R.ASSETS_MH3_261_INUNDATED_ARCHIVE_JPG,
+  R.ASSETS_MH3_261_WATERLOGGED_TEACHINGS_JPG,
+  R.ASSETS_ZNC_133_JWAR_ISLE_REFUGE_PNG,
+  R.ASSETS_C20_288_MEMORIAL_TO_FOLLY_PNG,
+  R.ASSETS_CLB_900_MORTUARY_MIRE_PNG,
+  R.ASSETS_EMN_205_NEPHALIA_ACADEMY_PNG,
+  R.ASSETS_LCC_344_NEPHALIA_DROWNYARD_PNG,
+  R.ASSETS_DSC_295_RELIQUARY_TOWER_PNG,
+  R.ASSETS_MKC_283_RIVER_OF_TEARS_PNG,
+  R.ASSETS_OTC_313_ROGUE_S_PASSAGE_PNG,
+  R.ASSETS_8ED_325_SALT_MARSH_PNG,
+  R.ASSETS_OTC_316_SCAVENGER_GROUNDS_PNG,
+  R.ASSETS_ZNC_141_SUBMERGED_BONEYARD_PNG,
+  R.ASSETS_OTC_325_SUNKEN_HOLLOW_PNG,
+  R.ASSETS_DSC_307_TEMPLE_OF_DECEIT_PNG,
+  R.ASSETS_SNC_259_WATERFRONT_DISTRICT_PNG,
 ];
 
-const clashCards = [
-  CardAssets.ASSETS_LRW_100_BOG_HOODLUMS_PNG,
-  CardAssets.ASSETS_LRW_77_PAPERFIN_RASCAL_PNG,
-  CardAssets.ASSETS_LRW_81_RINGSKIPPER_PNG,
+const _clashCards = [
+  R.ASSETS_LRW_100_BOG_HOODLUMS_PNG,
+  R.ASSETS_LRW_77_PAPERFIN_RASCAL_PNG,
+  R.ASSETS_LRW_81_RINGSKIPPER_PNG,
 ];
 
-const rampCards = [
-  CardAssets.ASSETS_DSC_92_ARCANE_SIGNET_PNG,
-  CardAssets.ASSETS_CLB_305_CHARCOAL_DIAMOND_PNG,
-  CardAssets.ASSETS_CLU_221_DIMIR_SIGNET_PNG,
-  CardAssets.ASSETS_JMP_472_MANA_GEODE_PNG,
-  CardAssets.ASSETS_DSC_248_MIND_STONE_PNG,
-  CardAssets.ASSETS_CLB_337_SKY_DIAMOND_PNG,
-  CardAssets.ASSETS_DSC_94_SOL_RING_PNG,
-  CardAssets.ASSETS_MKC_242_TALISMAN_OF_DOMINANCE_PNG,
-  CardAssets.ASSETS_DSC_256_THOUGHT_VESSEL_PNG,
-  CardAssets.ASSETS_MH3_298_WORN_POWERSTONE_PNG,
+const _rampCards = [
+  R.ASSETS_DSC_92_ARCANE_SIGNET_PNG,
+  R.ASSETS_CLB_305_CHARCOAL_DIAMOND_PNG,
+  R.ASSETS_CLU_221_DIMIR_SIGNET_PNG,
+  R.ASSETS_JMP_472_MANA_GEODE_PNG,
+  R.ASSETS_DSC_248_MIND_STONE_PNG,
+  R.ASSETS_CLB_337_SKY_DIAMOND_PNG,
+  R.ASSETS_DSC_94_SOL_RING_PNG,
+  R.ASSETS_MKC_242_TALISMAN_OF_DOMINANCE_PNG,
+  R.ASSETS_DSC_256_THOUGHT_VESSEL_PNG,
+  R.ASSETS_MH3_298_WORN_POWERSTONE_PNG,
 ];
 
-const drawCards = [
-  CardAssets.ASSETS_SNC_37_CASE_THE_JOINT_PNG,
-  CardAssets.ASSETS_CLU_84_CONSIDER_PNG,
-  CardAssets.ASSETS_C18_88_DREAM_CACHE_PNG,
-  CardAssets.ASSETS_WHO_133_GREAT_INTELLIGENCE_S_PLAN_PNG,
-  CardAssets.ASSETS_LRW_117_HOARDER_S_GREED_PNG,
-  CardAssets.ASSETS_MH3_65_KOZILEK_S_UNSEALING_PNG,
-  CardAssets.ASSETS_MOR_75_PULLING_TEETH_PNG,
-  CardAssets.ASSETS_DSC_154_READ_THE_BONES_PNG,
-  CardAssets.ASSETS_MOR_46_RESEARCH_THE_DEEP_PNG,
-  CardAssets.ASSETS_2XM_72_THOUGHT_REFLECTION_PNG,
+const _drawCards = [
+  R.ASSETS_SNC_37_CASE_THE_JOINT_PNG,
+  R.ASSETS_CLU_84_CONSIDER_PNG,
+  R.ASSETS_C18_88_DREAM_CACHE_PNG,
+  R.ASSETS_WHO_133_GREAT_INTELLIGENCE_S_PLAN_PNG,
+  R.ASSETS_LRW_117_HOARDER_S_GREED_PNG,
+  R.ASSETS_MH3_65_KOZILEK_S_UNSEALING_PNG,
+  R.ASSETS_MOR_75_PULLING_TEETH_PNG,
+  R.ASSETS_DSC_154_READ_THE_BONES_PNG,
+  R.ASSETS_MOR_46_RESEARCH_THE_DEEP_PNG,
+  R.ASSETS_2XM_72_THOUGHT_REFLECTION_PNG,
 ];
 
-const reorganizeLibrary = [
-  CardAssets.ASSETS_DMR_40_AVEN_FATESHAPER_PNG,
-  CardAssets.ASSETS_DSC_242_BRAINSTONE_PNG,
-  CardAssets.ASSETS_DSC_113_BRAINSTORM_PNG,
-  CardAssets.ASSETS_MH3_53_BRAINSURGE_PNG,
-  CardAssets.ASSETS_SOK_33_DESCENDANT_OF_SORAMARO_PNG,
-  CardAssets.ASSETS_DSC_87_DIABOLIC_VISION_PNG,
-  CardAssets.ASSETS_DTK_104_GRAVEPURGE_PNG,
-  CardAssets.ASSETS_MOM_228_HIDETSUGU_AND_KAIRI_PNG,
-  CardAssets.ASSETS_DMR_56_IMPULSE_PNG,
-  CardAssets.ASSETS_M13_55_INDEX_PNG,
-  CardAssets.ASSETS_DSC_73_PONDER_PNG,
-  CardAssets.ASSETS_MOR_76_REVIVE_THE_FALLEN_PNG,
-  CardAssets.ASSETS_ONS_115_SPY_NETWORK_PNG,
+const _reorganizeLibrary = [
+  R.ASSETS_DMR_40_AVEN_FATESHAPER_PNG,
+  R.ASSETS_DSC_242_BRAINSTONE_PNG,
+  R.ASSETS_DSC_113_BRAINSTORM_PNG,
+  R.ASSETS_MH3_53_BRAINSURGE_PNG,
+  R.ASSETS_SOK_33_DESCENDANT_OF_SORAMARO_PNG,
+  R.ASSETS_DSC_87_DIABOLIC_VISION_PNG,
+  R.ASSETS_DTK_104_GRAVEPURGE_PNG,
+  R.ASSETS_MOM_228_HIDETSUGU_AND_KAIRI_PNG,
+  R.ASSETS_DMR_56_IMPULSE_PNG,
+  R.ASSETS_M13_55_INDEX_PNG,
+  R.ASSETS_DSC_73_PONDER_PNG,
+  R.ASSETS_MOR_76_REVIVE_THE_FALLEN_PNG,
+  R.ASSETS_ONS_115_SPY_NETWORK_PNG,
 ];
 
-const bigBoys = [
-  CardAssets.ASSETS_M3C_46_BENTHIC_ANOMALY_PNG,
-  CardAssets.ASSETS_CMM_78_BRINELIN_THE_MOON_KRAKEN_PNG,
-  CardAssets.ASSETS_IKO_221_GYRUDA_DOOM_OF_DEPTHS_PNG,
-  CardAssets.ASSETS_CLB_850_NEMESIS_OF_REASON_PNG,
-  CardAssets.ASSETS_VOW_246_RUNO_STROMKIRK_JPG,
-  CardAssets.ASSETS_VOW_246_KROTHUSS_LORD_OF_THE_DEEP_JPG,
-  CardAssets.ASSETS_CMR_405_SLINN_VODA_THE_RISING_DEEP_PNG,
-  CardAssets.ASSETS_WHO_55_STAR_WHALE_PNG,
-  CardAssets.ASSETS_CMR_407_STORMTIDE_LEVIATHAN_PNG,
-  CardAssets.ASSETS_CMM_129_TROMOKRATIS_PNG,
-  CardAssets.ASSETS_NCC_359_WREXIAL_THE_RISEN_DEEP_PNG,
+const _bigBoys = [
+  R.ASSETS_M3C_46_BENTHIC_ANOMALY_PNG,
+  R.ASSETS_CMM_78_BRINELIN_THE_MOON_KRAKEN_PNG,
+  R.ASSETS_IKO_221_GYRUDA_DOOM_OF_DEPTHS_PNG,
+  R.ASSETS_CLB_850_NEMESIS_OF_REASON_PNG,
+  R.ASSETS_VOW_246_RUNO_STROMKIRK_JPG,
+  R.ASSETS_VOW_246_KROTHUSS_LORD_OF_THE_DEEP_JPG,
+  R.ASSETS_CMR_405_SLINN_VODA_THE_RISING_DEEP_PNG,
+  R.ASSETS_WHO_55_STAR_WHALE_PNG,
+  R.ASSETS_CMR_407_STORMTIDE_LEVIATHAN_PNG,
+  R.ASSETS_CMM_129_TROMOKRATIS_PNG,
+  R.ASSETS_NCC_359_WREXIAL_THE_RISEN_DEEP_PNG,
 ];
 
-const protectionAndRemoval = [
-  CardAssets.ASSETS_LRW_54_BROKEN_AMBITIONS_PNG,
-  CardAssets.ASSETS_LRW_55_CAPTIVATING_GLANCE_PNG,
-  CardAssets.ASSETS_DSC_136_DECREE_OF_PAIN_PNG,
-  CardAssets.ASSETS_10E_81_DISCOMBOBULATE_PNG,
-  CardAssets.ASSETS_DSC_78_FEED_THE_SWARM_PNG,
-  CardAssets.ASSETS_GTC_189_PSYCHIC_STRIKE_PNG,
-  CardAssets.ASSETS_CMD_60_SCATTERING_STROKE_PNG,
-  CardAssets.ASSETS_DDH_62_UNDERMINE_PNG,
-  CardAssets.ASSETS_LRW_147_WEED_STRANGLE_PNG,
-  CardAssets.ASSETS_CMR_409_WHELMING_WAVE_PNG,
-  CardAssets.ASSETS_CMD_69_WHIRLPOOL_WHELM_JPG,
+const _protectionAndRemoval = [
+  R.ASSETS_LRW_54_BROKEN_AMBITIONS_PNG,
+  R.ASSETS_LRW_55_CAPTIVATING_GLANCE_PNG,
+  R.ASSETS_DSC_136_DECREE_OF_PAIN_PNG,
+  R.ASSETS_10E_81_DISCOMBOBULATE_PNG,
+  R.ASSETS_DSC_78_FEED_THE_SWARM_PNG,
+  R.ASSETS_GTC_189_PSYCHIC_STRIKE_PNG,
+  R.ASSETS_CMD_60_SCATTERING_STROKE_PNG,
+  R.ASSETS_DDH_62_UNDERMINE_PNG,
+  R.ASSETS_LRW_147_WEED_STRANGLE_PNG,
+  R.ASSETS_CMR_409_WHELMING_WAVE_PNG,
+  R.ASSETS_CMD_69_WHIRLPOOL_WHELM_JPG,
 ];
 
-const topDeck = [
-  CardAssets.ASSETS_VOW_50_CEMETERY_ILLUMINATOR_PNG,
-  CardAssets.ASSETS_MH1_53_FUTURE_SIGHT_PNG,
-  CardAssets.ASSETS_5DN_135_LANTERN_OF_INSIGHT_PNG,
-  CardAssets.ASSETS_MAT_10_VESUVAN_DRIFTER_PNG,
-  CardAssets.ASSETS_RAV_75_WIZENED_SNITCHES_PNG,
+const _topDeck = [
+  R.ASSETS_VOW_50_CEMETERY_ILLUMINATOR_PNG,
+  R.ASSETS_MH1_53_FUTURE_SIGHT_PNG,
+  R.ASSETS_5DN_135_LANTERN_OF_INSIGHT_PNG,
+  R.ASSETS_MAT_10_VESUVAN_DRIFTER_PNG,
+  R.ASSETS_RAV_75_WIZENED_SNITCHES_PNG,
 ];
 
 extension BuildContextExtensions on BuildContext {
@@ -185,6 +189,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Marvo, Deep Operative',
       theme: theme.dark(),
+      onGenerateRoute: (settings) {
+        if (settings.name == 'upgrades') {
+          return MaterialPageRoute(
+            builder: (_) => const Upgrades(),
+          );
+        }
+        return null;
+      },
       home: Stack(
         children: [
           const Positioned.fill(
@@ -228,6 +240,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final scrollController = ScrollController();
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -255,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
           spacing,
           const Center(
             child: RotatingShiningCard(
-              image: CardAssets.ASSETS_MKC_7_MARVO_DEEP_OPERATIVE_PNG,
+              image: R.ASSETS_MKC_7_MARVO_DEEP_OPERATIVE_PNG,
               width: 400,
               height: 560,
             ),
@@ -296,7 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final land in landCards) CardPreview(asset: land),
+                for (final land in _landCards) CardPreview(asset: land),
               ],
             ),
           ),
@@ -342,7 +360,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final clash in clashCards) CardPreview(asset: clash),
+                for (final clash in _clashCards) CardPreview(asset: clash),
               ],
             ),
           ),
@@ -372,7 +390,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final ramp in rampCards) CardPreview(asset: ramp),
+                for (final ramp in _rampCards) CardPreview(asset: ramp),
               ],
             ),
           ),
@@ -402,7 +420,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final draw in drawCards) CardPreview(asset: draw),
+                for (final draw in _drawCards) CardPreview(asset: draw),
               ],
             ),
           ),
@@ -432,7 +450,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final reorganize in reorganizeLibrary)
+                for (final reorganize in _reorganizeLibrary)
                   CardPreview(asset: reorganize),
               ],
             ),
@@ -463,7 +481,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final bigBoy in bigBoys) CardPreview(asset: bigBoy),
+                for (final bigBoy in _bigBoys) CardPreview(asset: bigBoy),
               ],
             ),
           ),
@@ -493,7 +511,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final protection in protectionAndRemoval)
+                for (final protection in _protectionAndRemoval)
                   CardPreview(asset: protection),
               ],
             ),
@@ -524,7 +542,7 @@ class _MyHomePageState extends State<MyHomePage> {
               spacing: 32,
               runSpacing: 32,
               children: [
-                for (final topDeckCard in topDeck)
+                for (final topDeckCard in _topDeck)
                   CardPreview(asset: topDeckCard),
               ],
             ),
@@ -571,6 +589,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 .jumpTo(scrollController.position.maxScrollExtent),
             icon: const Icon(Icons.move_down),
             message: 'Scroll to bottom',
+          ),
+          ActionButton(
+            onPressed: () => Navigator.of(context).pushNamed('upgrades'),
+            icon: const Icon(Icons.upgrade),
+            message: 'Deck Upgrades',
           ),
         ],
       ),
